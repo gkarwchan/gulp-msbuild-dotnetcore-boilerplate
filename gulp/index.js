@@ -1,6 +1,10 @@
 let gulp = require('gulp');
 const compile = require('./compile');
+const clean = require('./clean');
+const assemblyInfo = require('./assemblyInfo');
+const version = require('./version');
 
 
-gulp.task('compile', compile);
-gulp.task('default', gulp.series('compile'));
+gulp.task('clean', clean);
+gulp.task('compile', gulp.series(clean, version, assemblyInfo, compile, (done) => { done(); }));
+gulp.task('default', gulp.series(clean, version, assemblyInfo, compile));
